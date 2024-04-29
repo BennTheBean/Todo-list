@@ -1,38 +1,167 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+      'Lucida Sans', Arial, sans-serif;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  :root {
+    --text-color: #fff; /*Darkmode primary text*/
+    --text-color2: #e2e2e2; /*Darkmode secondary text*/
+    --bg-gradient: linear-gradient(90deg, #614385, #516395); /*Darkmode bg gradient*/
+    --box-color: #09203F; /*Darkmode task list box color*/
+    --newtask-border: #11998E; /*Darkmode new task box color*/
+    --newtask-gradient: linear-gradient(90deg, #11998E, #38EF7D); /*Darkmode new task gradient*/
+    --edittask-border: #2E3192; /*Darkmode edit task box color*/
+    --edittask-gradient: linear-gradient(90deg, #2E3192, #1BFFFF); /*Darkmode edit task gradient*/
+    --task-gradient: linear-gradient(90deg, #ED1E79, #662D8C); /*Darkmode task gradient*/
+    --task2-gradient: linear-gradient(90deg, #FBB03B, #D4145A); /*Darkmode task2 gradient*/
+    --task3-gradient: linear-gradient(90deg, #38EF7D, #11998E); /*Darkmode task3 gradient*/
+    --task4-gradient: linear-gradient(90deg, #1BFFFF, #2E3192); /*Darkmode task4 gradient*/
+    --toggle-fg: #170895; /*Darkmode task list box color*/
   }
-  to {
-    transform: rotate(360deg);
+
+  [data-theme="light"] {
+    --text-color: #000; /*Lightmode primary text*/
+    --text-color2: #1d1d1d; /*Lightmode secondary text*/
+    --box-color: #f6dfc0; /*Lightmode task list box color*/
+    --newtask-border: #D8B5FF; /*Lightmode new task box color*/
+    --newtask-gradient: linear-gradient(90deg, #D8B5FF, #1EAE98); /*Lightmode new task gradient*/
+    --edittask-border: #C6EA8D; /*Lightmode edit task box color*/
+    --edittask-gradient: linear-gradient(90deg, #C6EA8D, #FE90AF); /*Lightmode edit task gradient*/
+    --task-gradient: linear-gradient(90deg, #A890FE, #EA8D8D); /*Lightmode task gradient*/
+    --task2-gradient: linear-gradient(90deg, #FE90AF, #C6EA8D); /*Lightmode task2 gradient*/
+    --task3-gradient: linear-gradient(90deg, #1EAE98, #D8B5FF); /*Lightmode task3 gradient*/
+    --task4-gradient: linear-gradient(90deg, #93A5CF, #E4EfE9); /*Lightmode task4 gradient*/
+    --toggle-fg: #cbc029; /*Darkmode task list box color*/
   }
-}
+
+  body {
+    background: var(--bg-gradient); /*Calls the background gradient variable*/
+    transition: background-color 0.25s ease-in-out;
+  }
+
+  .task-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 520px;
+    min-height: 600px;
+    background: var(--box-color); /*Calls the task box color*/
+    transition: background-color 0.25s ease-in-out;
+    text-align: center;
+    margin: 128px auto;
+    border-radius: 10px;
+    padding-bottom: 32px;
+  }
+  
+  h1 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    color: var(--text-color); /*Calls the primary text color*/
+    font-size: 24px;
+  }
+  
+  .task-data {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    color: var(--text-color); /*Calls the primary text color*/
+    font-size: 18px;
+  }
+
+  .complete {
+    text-decoration: line-through;
+    opacity: 0.4;
+  }
+  
+  .task-form {
+    margin-bottom: 32px;
+  }
+  
+  .task-input {
+    padding: 14px 32px 14px 16px;
+    border-radius: 4px 0 0 4px;
+    border: 2px solid var(--newtask-border); /*Calls the add task box border color*/
+    outline: none;
+    width: 320px;
+    background: transparent;
+    color: var(--text-color); /*Calls the primary text color*/
+  }
+  
+  .task-input::placeholder { 
+    color: var(--text-color2); /*Calls the second text color*/
+  }
+  
+  .task-button {
+    padding: 16px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    outline: none;
+    background: var(--newtask-gradient); /*Calls the new task gradient variable*/
+    color: var(--text-color); /*Calls the primary text color*/
+    text-transform: capitalize;
+  }
+  
+  .task-input.edit {
+    border: 2px solid var(--edittask-border); /*Calls the edit task box border color*/
+  }
+  
+  .task-button.edit {
+    background: var(--edittask-gradient); /*Calls the edit task gradient variable*/
+    padding: 16px 18px;
+  }
+  
+  .task-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
+  
+  .task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px auto;
+    color: var(--text-color); /*Calls the text color*/
+    background: var(--task-gradient); /*Calls the task1 gradient variable*/
+    padding: 16px;
+    border-radius: 5px;
+    width: 90%;
+  }
+  
+  .task-row:nth-child(4n + 1) {
+    background: var(--task2-gradient); /*Calls the task2 gradient variable*/
+  }
+  
+  .task-row:nth-child(4n + 2) {
+    background: var(--task3-gradient); /*Calls the task3 gradient variable*/ 
+  }
+  
+  .task-row:nth-child(4n + 3) {
+    background: var(--task4-gradient); /*Calls the task4 gradient variable*/
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .delete-icon {
+    margin-right: 5px;
+    color: var(--text-color); /*Calls the primary text color*/
+  }
+  
+  .complete-icon {
+    margin-right: 5px;
+    color: var(--text-color); /*Calls the primary text color*/
+  }
+
+  .signature {
+    position: fixed;
+    bottom: 0.5em;
+    left: 1.5em;
+  }

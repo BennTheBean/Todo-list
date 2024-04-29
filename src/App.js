@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import TaskList from './Components/TaskList';
+import { Toggle } from './Components/Toggle';
+import useLocalStorage from "use-local-storage";
+
 
 function App() {
+  const [isDark, setIsDark] = useLocalStorage("isDark", false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='task-app' data-theme={isDark ? "dark" : "light"}>
+      <h1 className='signature'>ΛNDREW BENN</h1>
+      <Toggle
+        isChecked={isDark}
+        handleChange={() => setIsDark(!isDark)}
+      />
+      <TaskList />
     </div>
   );
 }
