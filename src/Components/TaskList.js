@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskForm from './TaskForm';
 import Task from './Task';
 
 function TaskList() {
-  // State for managing tasks
-  const [tasks, setTasks] = useState([]);
+  // Load tasks from localStorage or initialize an empty array
+  const [tasks, setTasks] = useState(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
+
+  // Save tasks to localStorage whenever tasks state changes
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   // Function to add new task
   const addTask = task => {
